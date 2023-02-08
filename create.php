@@ -1,6 +1,29 @@
 <?php
 $pdo = new PDO('mysql:host=localhost;port=3306;dbname=products_crud', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    echo 'yo';
+    $title = $_POST['title'];
+    $description = $_POST["description"];
+    $price = $_POST["price"];
+    $date = date("Y-m-d H:i:s"); // 2001-03-10 17:16:18 (the MySQL DATETIME format)
+
+
+    $statement = $pdo->prepare("INSERT INTO products (title,image,description,price,created_at)
+    VALUES(:title,:image,:description,:price,:date)");
+
+    $statement->bindValue(':title', $title);
+    $statement->bindValue(':image', ' ');
+    $statement->bindValue(':description', $description);
+    $statement->bindValue(':price', $price);
+    $statement->bindValue(':date', $date);
+
+    $res = $statement->execute();
+
+}
 ?>
 
 <!doctype html>
@@ -42,7 +65,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             </div>
 
 
-            <button type="submit" class="btn btn-dark w-100">Submit</button>
+            <button name='submit ' type="submit" class="btn btn-dark w-100">Submit</button>
         </form>
     </div>
 
