@@ -5,13 +5,6 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $statement = $pdo->prepare('SELECT * FROM products ORDER BY created_at DESC');
 $statement->execute();
 $products = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-echo '<pre>';
-var_dump($products);
-echo '</pre>';
-
-
-
 ?>
 
 <!doctype html>
@@ -29,7 +22,13 @@ echo '</pre>';
 </head>
 
 <body class="container-lg py-5">
+    <!-- title -->
     <h1 class="my-5">Products CRUD</h1>
+    <!-- create product -->
+    <div class="mb-4">
+        <a href="create.php" class="btn btn-success">Create Product</a>
+    </div>
+    <!-- data table -->
     <table class="table table-striped">
         <thead>
             <tr>
@@ -37,26 +36,25 @@ echo '</pre>';
                 <th scope="col">Image</th>
                 <th scope="col">Title</th>
                 <th scope="col">Price</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
+            <?php foreach ($products as $i => $product) : ?>
+                <tr>
+                    <th scope="row"><?php echo $i + 1  ?></th>
+                    <td><?php echo $product['image'] ?></td>
+                    <td><?php echo $product['title'] ?></td>
+                    <td><?php echo $product['price'] ?></td>
+                    <td><?php echo $product['created_at'] ?></td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm">Edit</button>
+                        <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+
+                </tr>
+            <?php endforeach ?>
         </tbody>
     </table>
 
