@@ -30,6 +30,7 @@ $products = $statement->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <!-- data table -->
     <table class="table table-striped">
+
         <thead>
             <tr>
                 <th scope="col">#</th>
