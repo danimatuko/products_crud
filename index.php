@@ -48,7 +48,7 @@ $products = $statement->fetchAll(PDO::FETCH_ASSOC);
                     <th scope="row">
                         <?php echo $i + 1 ?>
                     </th>
-                    <td> <img src="<?php echo $product['image'] ?>"width="50px"/> </td>
+                    <td> <img src="<?php echo $product['image'] ?>" width="50px" /> </td>
                     <td>
                         <?php echo $product['title'] ?>
                     </td>
@@ -60,7 +60,10 @@ $products = $statement->fetchAll(PDO::FETCH_ASSOC);
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary btn-sm">Edit</button>
-                        <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                        <form method='POST' action="delete.php" class="d-inline-block">
+                            <input type="hidden" name="id" value=<?php echo $product['id'] ?>>
+                            <button type=" submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                     </td>
 
                 </tr>
