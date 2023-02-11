@@ -5,7 +5,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // init errors
 $errors = [];
 
-// initial form values 
+// initial form values
 $title = '';
 $description = '';
 $price = '';
@@ -28,17 +28,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     if (empty($errors)) {
+        // handle file upload
+        $image = $_FILES['image'] ?? null;
+        $image_path = 'images/' . randomString(8) . '-' . $image['name'];
+        $directory = "images/";
+
+        if ($image) {
+            move_uploaded_file($image['tmp_name'], $image_path);
+        }
+
+
+
         // prepare query
         $statement = $pdo->prepare("INSERT INTO products (title,image,description,price,created_at) VALUES (:title,:image,:description,:price,:date)");
         // bind values
         $statement->bindValue(':title', $title);
-        $statement->bindValue(':image', ' ');
+        $statement->bindValue(':image', $image_path);
         $statement->bindValue(':description', $description);
         $statement->bindValue(':price', $price);
         $statement->bindValue(':date', $date);
         // add product to db
         $res = $statement->execute();
+        // redirect after successful upload
+        header('Location: index.php');
+
     }
+}
+
+function randomString($n)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $str = '';
+    for ($i = 0; $i < $n; $i++) {
+        $index = rand(0, strlen($characters) - 1);
+        $str .= $characters[$index];
+    }
+
+    return $str;
 }
 
 ?>
@@ -63,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- show errors if exists -->
         <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger">
+            <div class="alert alert-danger mb-3">
                 <?php foreach ($errors as $error): ?>
                     <div>
                         <?php echo $error ?>
@@ -72,8 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         <?php endif ?>
 
+        <h1 class="text-uppercase mb-4 display-3 fw-bold">Add new product</h1>
+
         <!-- create product form -->
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="product-title" class="product-title">Product Image</label>
                 <input name="image" type="file" class="form-control" id="product-title">
