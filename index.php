@@ -16,7 +16,8 @@ $products = $statement->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Products CRUD</title>
 </head>
@@ -42,13 +43,21 @@ $products = $statement->fetchAll(PDO::FETCH_ASSOC);
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($products as $i => $product) : ?>
+            <?php foreach ($products as $i => $product): ?>
                 <tr>
-                    <th scope="row"><?php echo $i + 1  ?></th>
-                    <td><?php echo $product['image'] ?></td>
-                    <td><?php echo $product['title'] ?></td>
-                    <td><?php echo $product['price'] ?></td>
-                    <td><?php echo $product['created_at'] ?></td>
+                    <th scope="row">
+                        <?php echo $i + 1 ?>
+                    </th>
+                    <td> <img src="<?php echo $product['image'] ?>"width="50px"/> </td>
+                    <td>
+                        <?php echo $product['title'] ?>
+                    </td>
+                    <td>
+                        <?php echo $product['price'] ?>
+                    </td>
+                    <td>
+                        <?php echo $product['created_at'] ?>
+                    </td>
                     <td>
                         <button type="button" class="btn btn-primary btn-sm">Edit</button>
                         <button type="button" class="btn btn-danger btn-sm">Delete</button>
