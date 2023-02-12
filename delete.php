@@ -4,8 +4,6 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $id = $_POST['id'] ?? null;
 
-echo $id;
-
 if (!$id) {
     header('Location: index.php');
 }

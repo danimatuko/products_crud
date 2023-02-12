@@ -5,6 +5,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $statement = $pdo->prepare('SELECT * FROM products ORDER BY created_at DESC');
 $statement->execute();
 $products = $statement->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!doctype html>
@@ -59,10 +60,10 @@ $products = $statement->fetchAll(PDO::FETCH_ASSOC);
                         <?php echo $product['created_at'] ?>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary btn-sm">Edit</button>
+                        <a href="update.php?id=<?php echo $product['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
                         <form method='POST' action="delete.php" class="d-inline-block">
                             <input type="hidden" name="id" value=<?php echo $product['id'] ?>>
-                            <button type=" submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
                     </td>
 
